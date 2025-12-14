@@ -9,8 +9,6 @@ services:
       - ./backend:/var/www/html
     working_dir: /var/www/html
     command: php-fpm
-    entrypoint: ["/var/www/html/docker-entrypoint.sh"]
-
 
   nginx:
     image: nginx:alpine
