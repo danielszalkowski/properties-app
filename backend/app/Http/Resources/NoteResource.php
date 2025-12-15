@@ -20,4 +20,16 @@ class NoteResource extends JsonResource
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
+
+    /**
+     * @param  \Illuminate\Http\Request 
+     * @return array
+     */
+    public function with(Request $request): array
+    {
+        return [
+            'message' => null,
+            'errors' => null,
+        ];
+    }
 }

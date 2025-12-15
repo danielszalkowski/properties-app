@@ -14,7 +14,7 @@ const NotesList = () => {
     setError(null);
     try {
       const response = await axios.get(`/api/notes?q=${query}`);
-      setNotes(response.data.data); 
+      setNotes(response.data.data);
     } catch (err) {
       setError('Error al cargar las notas, ¡falla el backend o la red!');
       console.error(err);
@@ -31,13 +31,13 @@ const NotesList = () => {
     if (window.confirm('¿Seguro que quieres borrar esta nota, tete?')) {
       try {
         await axios.delete(`/api/notes/${id}`);
-        setNotes(notes.filter(note => note.id !== id)); 
+        setNotes(notes.filter(note => note.id !== id));
       } catch (err) {
         alert('Fallo al borrar la nota. Mira la consola.');
       }
     }
   };
-  
+
   const handleSearch = (e) => {
     e.preventDefault();
     fetchNotes(search);
@@ -49,12 +49,12 @@ const NotesList = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        {}
+        { }
         <Link to="/new" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
           + Nueva Nota
         </Link>
-        
-        {}
+
+        { }
         <form onSubmit={handleSearch} className="flex">
           <input
             type="text"
@@ -74,7 +74,11 @@ const NotesList = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {notes.map((note) => (
           <div key={note.id} className="p-4 border rounded-lg shadow-md bg-white">
-            <h3 className="text-xl font-semibold mb-2">{note.title}</h3>
+            {/* ⬅️ CAMBIO AQUÍ: Enlace al detalle */}
+            <Link to={`/notes/${note.id}`} className="block hover:text-blue-600">
+              <h3 className="text-xl font-semibold mb-2 cursor-pointer">{note.title}</h3>
+            </Link>
+            {/* ------------------------------- */}
             <p className="text-gray-600 mb-4 line-clamp-3">{note.content || 'Sin contenido'}</p>
             <div className="flex justify-end space-x-2">
               <Link

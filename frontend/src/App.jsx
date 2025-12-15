@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import NotesList from './components/NotesList'; 
 import NoteForm from './components/NotesForm';
+import NoteDetail from './components/NoteDetail';
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <Routes>
         <Route path="/" element={<NotesList />} />
         <Route path="/new" element={<NoteForm />} />
-        <Route path="/edit/:id" element={<NoteForm />} /> {}
+        <Route path="/edit/:id" element={<NoteForm />} />
+        <Route path="/notes/:id" element={<NoteDetail />} /> {}
         <Route path="*" element={<h2 className="text-red-500">404 - No encontrado</h2>} />
       </Routes>
     </div>
