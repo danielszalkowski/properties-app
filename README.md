@@ -3,8 +3,6 @@
 Aplicación mínima de notas (CRUD) desarrollada con **Laravel 11 (API JSON)** y **React + Vite**, totalmente dockerizada.  
 Usa **SQLite** como base de datos para simplificar la puesta en marcha.
 
-El objetivo es que cualquier persona pueda clonar el repositorio y ejecutar el proyecto en local usando Docker.
-
 ---
 
 ## 🧱 Stack técnico
@@ -20,14 +18,13 @@ El objetivo es que cualquier persona pueda clonar el repositorio y ejecutar el p
 - React
 - Vite
 - React Router
-- Fetch / Axios
+- Axios
 - Tests básicos
 
 ### Infraestructura
 - Docker
 - Docker Compose
 - Nginx
-- Un solo `docker-compose.yml`
 
 ---
 
