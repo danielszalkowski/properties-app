@@ -25,16 +25,26 @@ Usa **SQLite** como base de datos para simplificar la puesta en marcha.
 - Docker
 - Docker Compose
 - Nginx
+- PHP-FPM
+- Node
 
 ---
 
 ## 📁 Estructura del proyecto
 
 notes-app/
-├── backend/ # Laravel (API)
-├── frontend/ # React + Vite
-├── docker/ # Configuración Docker
-├── docker-compose.yml
+├── backend/             
+│   ├── app/             
+│   ├── database/        
+│   └── ...
+├── frontend/            
+│   ├── src/             
+│   └── ...
+├── docker/              
+│   ├── nginx/           
+│   └── php/             
+├── .env.example         
+├── docker-compose.yml   
 └── README.md
 
 
