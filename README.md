@@ -32,20 +32,19 @@ Usa **SQLite** como base de datos para simplificar la puesta en marcha.
 
 ## 📁 Estructura del proyecto
 
+```text
 notes-app/
-├── backend/             
-│   ├── app/             
-│   ├── database/        
-│   └── ...
-├── frontend/            
-│   ├── src/             
-│   └── ...
-├── docker/              
-│   ├── nginx/           
-│   └── php/             
-├── .env.example         
-├── docker-compose.yml   
+├── backend/
+│   ├── app/
+│   └── database/
+├── frontend/
+│   └── src/
+├── docker/
+│   ├── nginx/
+│   └── php/
+├── docker-compose.yml
 └── README.md
+```
 
 
 ---
