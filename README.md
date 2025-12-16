@@ -84,23 +84,23 @@ touch backend/database/database.sqlite
 New-Item -Path "./backend/database/database.sqlite" -ItemType File
 ```
 
-### 4️⃣ Levantar los contenedores
-> ⚠️ En Windows, asegúrate de que **Docker Desktop** esté ejecutándose antes de usar cualquier comando `docker compose`.
+### 4️⃣ Instalar dependencias del backend
+> ⚠️ En Windows, asegúrate de que **Docker Desktop** esté ejecutándose antes de usar cualquier comando `docker compose`. Si utilizas docker en WSL en vez de la versión de Windows, puedes ejecutar el resto de comandos en WSL directamente.
 
 ```bash
-docker compose up --build
+docker compose run --rm backend composer install
 ```
 
-### 5️⃣ Instalar dependencias del backend
+### 5️⃣ Instalar dependencias del frontend
 
 ```bash
-docker compose exec backend composer install
+docker compose run --rm frontend npm install
 ```
 
-### 6️⃣ Instalar dependencias del frontend
+### 6️⃣ Levantar los contenedores
 
 ```bash
-docker compose exec frontend npm install
+docker compose up -d
 ```
 
 ### 7️⃣ Generar la clave de la aplicación
