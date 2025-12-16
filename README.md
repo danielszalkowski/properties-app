@@ -57,6 +57,9 @@ notes-app/
 
 ---
 
+> El proyecto se puede clonar desde Windows o WSL/Linux, aunque desde Windows funciona mucho más lento ya que el sistema de archivos de Windows (NTFS) tiene una latencia alta al sincronizar volúmenes con contenedores Linux. Se recomienda encarecidamente el uso de WSL2 con los archivos ubicados dentro del sistema de archivos de la distribución (ej. ~/projects/...) para un rendimiento óptimo de PHP y Node.js.
+
+
 ### 1️⃣ Clonar el repositorio
 
 ```bash
@@ -85,7 +88,7 @@ New-Item -Path "./backend/database/database.sqlite" -ItemType File
 ```
 
 ### 4️⃣ Instalar dependencias del backend
-> ⚠️ En Windows, asegúrate de que **Docker Desktop** esté ejecutándose antes de usar cualquier comando `docker compose`. Si utilizas docker en WSL en vez de la versión de Windows, puedes ejecutar el resto de comandos en WSL directamente.
+> ⚠️ En Windows, asegúrate de que **Docker Desktop** esté ejecutándose antes de usar cualquier comando `docker compose`. Si utilizas Docker en WSL en vez de la versión de Windows, puedes ejecutar el resto de comandos en WSL directamente.
 
 ```bash
 docker compose run --rm backend composer install
