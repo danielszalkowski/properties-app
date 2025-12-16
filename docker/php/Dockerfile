@@ -10,8 +10,5 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
-
-RUN mkdir -p storage/logs bootstrap/cache database \
-    && chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN sed -i 's/user = www-data/user = root/g' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's/group = www-data/group = root/g' /usr/local/etc/php-fpm.d/www.conf
