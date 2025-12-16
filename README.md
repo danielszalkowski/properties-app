@@ -81,7 +81,7 @@ touch backend/database/database.sqlite
 #### Windows (Powershell)
 
 ```bash
-New-Item -Path "./database/database.sqlite" -ItemType File
+New-Item -Path "./backend/database/database.sqlite" -ItemType File
 ```
 
 ### 4️⃣ Levantar los contenedores
