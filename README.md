@@ -1,7 +1,7 @@
 # 📝 Notes App — Laravel + React + Docker
 
-Aplicación mínima de notas (CRUD) desarrollada con **Laravel 11 (API JSON)** y **React + Vite**, totalmente dockerizada.  
-Usa **SQLite** como base de datos para simplificar la puesta en marcha.
+Aplicación de notas (CRUD) desarrollada con **Laravel 11** y **React + Vite**.
+Se utiliza **SQLite** como base de datos.
 
 ---
 
@@ -60,7 +60,7 @@ notes-app/
 ### 1️⃣ Clonar el repositorio
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/danielszalkowski/notes-app.git
 cd notes-app
 ```
 
