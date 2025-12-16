@@ -9,6 +9,3 @@ RUN apk add --no-cache \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
-
-RUN sed -i 's/user = www-data/user = root/g' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's/group = www-data/group = root/g' /usr/local/etc/php-fpm.d/www.conf
