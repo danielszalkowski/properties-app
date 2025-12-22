@@ -11,10 +11,18 @@ class AvailableForOperationsQuery
     public static function get(Request $request): Builder
     {
         $user = $request->user();
-        
+
         $query = Property::query()
+            ->with([
+                'user',
+                'propertyType',
+                'office',
+                'neighborhood',
+                'district',
+                'municipality'
+            ])
             ->where('is_active', true)
-            
+
             ->whereDoesntHave('operations', function (Builder $q) {
                 $q->whereHas('status', function (Builder $statusQuery) {
                     $statusQuery->where('is_closed', false);
@@ -36,19 +44,45 @@ class AvailableForOperationsQuery
             $query->where($column, $request->zone_id);
         }
 
-        $query->when($request->operation_type, function ($q, $type) use ($request) {
-            $column = ($type === 'sale') ? 'sell_price' : 'rental_price';
-            if ($request->min_price) $q->where($column, '>=', $request->min_price);
-            if ($request->max_price) $q->where($column, '<=', $request->max_price);
-            
+        if ($request->min_price || $request->max_price) {
+            $query->where(function ($mainQuery) use ($request) {
+                $min = $request->min_price;
+                $max = $request->max_price;
+                $type = $request->operation_type;
+
+                if ($type === 'sale') {
+                    if ($min) $mainQuery->where('sell_price', '>=', $min);
+                    if ($max) $mainQuery->where('sell_price', '<=', $max);
+                } elseif ($type === 'rent') {
+                    if ($min) $mainQuery->where('rental_price', '>=', $min);
+                    if ($max) $mainQuery->where('rental_price', '<=', $max);
+                } else {
+                    $mainQuery->where(function ($sub) use ($min, $max) {
+                        $sub->where(function ($qSale) use ($min, $max) {
+                            $qSale->where('is_sell', true);
+                            if ($min) $qSale->where('sell_price', '>=', $min);
+                            if ($max) $qSale->where('sell_price', '<=', $max);
+                        })
+                            ->orWhere(function ($qRent) use ($min, $max) {
+                                $qRent->where('is_rent', true);
+                                if ($min) $qRent->where('rental_price', '>=', $min);
+                                if ($max) $qRent->where('rental_price', '<=', $max);
+                            });
+                    });
+                }
+            });
+        }
+
+        $query->when($request->operation_type, function ($q, $type) {
             $q->where($type === 'sale' ? 'is_sell' : 'is_rent', true);
         });
 
         $query->when($request->search, function ($q, $search) {
+            $search = strtolower($search);
             $q->where(function ($sub) use ($search) {
-                $sub->where('title', 'like', "%{$search}%")
-                    ->orWhere('street', 'like', "%{$search}%")
-                    ->orWhere('intern_reference', 'like', "%{$search}%");
+                $sub->whereRaw('LOWER(title) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(street) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(intern_reference) LIKE ?', ["%{$search}%"]);
             });
         });
 

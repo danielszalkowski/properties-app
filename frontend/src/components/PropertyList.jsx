@@ -10,7 +10,7 @@ const PropertyList = () => {
 
     const [filters, setFilters] = useState({
         search: '',
-        operation_type: 'sale',
+        operation_type: '',
         property_type_id: '',
         min_price: '',
         max_price: '',
@@ -90,7 +90,7 @@ const PropertyList = () => {
             {/* FORMULARIO ÚNICO DE FILTROS */}
             <div className="bg-gray-50 p-6 rounded-2xl mb-8 border border-gray-200">
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    
+
                     {/* Búsqueda principal (ahora usa filters.search) */}
                     <div className="md:col-span-2">
                         <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Búsqueda</label>
@@ -110,6 +110,7 @@ const PropertyList = () => {
                             onChange={(e) => setFilters({ ...filters, operation_type: e.target.value })}
                             className="w-full p-2 border rounded-lg bg-white"
                         >
+                            <option value="">Cualquier operación</option> {/* Opción para ver todo */}
                             <option value="sale">En Venta</option>
                             <option value="rent">En Alquiler</option>
                         </select>
@@ -139,6 +140,30 @@ const PropertyList = () => {
                         <input type="number" value={filters.max_surface_m2} onChange={(e) => setFilters({ ...filters, max_surface_m2: e.target.value })} className="w-full p-2 border rounded-lg" />
                     </div>
                 </form>
+                {/* CONTROL DE VISTA Y CONTEO */}
+                <div className="flex flex-col md:flex-row justify-between items-center mt-4 px-2 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                    <div className="text-sm text-gray-500 mb-4 md:mb-0">
+                        Mostrando <span className="font-bold text-blue-600">{properties.length}</span> de <span className="font-bold text-gray-800">{pagination.total}</span> propiedades disponibles
+                    </div>
+
+                    <div className="flex items-center space-x-3">
+                        <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Ver:</label>
+                        <select
+                            value={filters.per_page}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                setFilters(prev => ({ ...prev, per_page: val }));
+                                setTimeout(() => fetchProperties(1), 0);
+                            }}
+                            className="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 outline-none transition-all"
+                        >
+                            <option value="10">10 resultados</option>
+                            <option value="20">20 resultados</option>
+                            <option value="30">30 resultados</option>
+                            <option value="50">50 resultados</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             {error && <p className="text-red-500 font-bold text-center mb-6 bg-red-50 p-4 rounded-lg">{error}</p>}
@@ -148,7 +173,7 @@ const PropertyList = () => {
                 <div className="text-center py-20 text-xl font-semibold text-gray-400">Cargando datos...</div>
             ) : (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                         {properties.map((prop) => (
                             <div key={prop.id} className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                                 <div className="p-6">
@@ -160,8 +185,15 @@ const PropertyList = () => {
                                     <p className="text-gray-500 text-sm mb-4 truncate">📍 {prop.address}</p>
                                     <div className="flex items-end justify-between border-t border-gray-50 pt-4">
                                         <div>
-                                            <p className="text-xs text-gray-400 uppercase font-semibold">Precio</p>
-                                            <p className="text-2xl font-black text-green-600">{prop.price ? `${new Intl.NumberFormat('es-ES').format(prop.price)}€` : 'N/A'}</p>
+                                            <p className="text-xs text-gray-400 uppercase font-semibold">
+                                                {}
+                                                {prop.operation_type === 'sale' ? 'Precio Venta' : 'Alquiler'}
+                                            </p>
+                                            <p className="text-2xl font-black text-green-600">
+                                                {prop.price ? `${new Intl.NumberFormat('es-ES').format(prop.price)}€` : 'N/A'}
+                                                {}
+                                                {prop.operation_type === 'rent' && <span className="text-sm ml-1">/mes</span>}
+                                            </p>
                                         </div>
                                         <div className="text-right">
                                             <p className="text-xs text-gray-400 uppercase font-semibold">Superficie</p>

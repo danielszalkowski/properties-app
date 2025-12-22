@@ -52,8 +52,22 @@ class PropertyTestSeeder extends Seeder
             'neighborhood_id' => $neigh->id,
         ]);
 
-        $properties = Property::factory()->count(50)->create();
+        Property::factory()->create([
+            'title' => 'Piso invisible (Inactivo)',
+            'is_active' => false,
+        ]);
 
+        $pisoVendido = Property::factory()->create([
+            'title' => 'Piso ya vendido (Cerrado)',
+            'is_active' => true,
+        ]);
+
+        Operation::create([
+            'property_id' => $pisoVendido->id,
+            'operation_status_id' => $cerrada->id, // <--- El status que pusiste 'is_closed' => true
+        ]);
+
+        $properties = Property::factory()->count(50)->create();
 
         $properties->random(15)->each(function ($property) use ($abierta) {
             Operation::create([

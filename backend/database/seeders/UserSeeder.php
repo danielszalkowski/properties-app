@@ -20,6 +20,12 @@ class UserSeeder extends Seeder
         ])->assignRole('admin');
 
         User::factory()->create([
+            'name' => 'God',
+            'email' => 'god@ejemplo.com',
+            'office_id' => 1,
+        ])->assignRole('god');
+
+        User::factory()->create([
             'name' => 'User',
             'email' => 'user@ejemplo.com',
             'office_id' => 2,

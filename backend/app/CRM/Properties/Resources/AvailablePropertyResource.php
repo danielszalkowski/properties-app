@@ -9,33 +9,41 @@ class AvailablePropertyResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $type = $request->operation_type ?? ($this->is_sell ? 'sale' : 'rent');
 
-        $price = ($type === 'rent') ? $this->rental_price : $this->sell_price;
+        $operationType = $request->operation_type ?? ($this->is_rent ? 'rent' : 'sale');
+
+        if (!$operationType) {
+            $operationType = $this->is_sell ? 'sale' : 'rent';
+        }
 
         return [
-            'id'                => $this->ulid,
-            'intern_reference'  => $this->intern_reference,
-            'title'             => $this->title,
-            'address'           => trim("{$this->street} {$this->number}, {$this->zip_code}") ?: 'Dirección no disponible',
-            'property_type'     => [
-                'id'   => $this->propertyType->id,
-                'name' => $this->propertyType->name,
-            ],
-            'surface_m2'        => $this->built_m2,
-            'price'             => $price,
-            'operation_type'    => $type,
-            'is_sell'           => (bool) $this->is_sell,
-            'is_rent'           => (bool) $this->is_rent,
-            'office'            => [
-                'id'   => $this->office->id,
-                'name' => $this->office->name,
+            'id' => $this->ulid,
+            'intern_reference' => $this->intern_reference,
+            'title' => $this->title,
+            'address' => "{$this->street} {$this->number}, {$this->zip_code} " . ($this->municipality?->name ?? ''),
+            'property_type' => [
+                'id' => $this->property_type_id,
+                'name' => $this->propertyType?->name ?? 'Sin tipo',
             ],
             'zone' => [
-                'neighborhood' => $this->neighborhood?->name,
-                'municipality' => $this->municipality?->name,
+                'type' => $this->getZoneType(),
+                'id' => $this->getZoneId(),
+                'name' => $this->getZoneName(),
             ],
-            'created_at'        => $this->created_at->toISOString(),
+            'surface_m2' => (int) $this->built_m2,
+            'price' => (float) ($operationType === 'rent' ? $this->rental_price : $this->sell_price),
+            'operation_type' => $operationType,
+            'is_sell' => (bool) $this->is_sell,
+            'is_rent' => (bool) $this->is_rent,
+            'office' => [
+                'id' => $this->office_id,
+                'name' => $this->office?->name ?? 'Oficina no asignada',
+            ],
+            'main_agent' => [
+                'id'   => $this->user_id,
+                'name' => $this->user?->name ?? 'Agente sin asignar',
+            ],
+            'created_at' => $this->created_at?->toISOString(),
         ];
     }
 }
