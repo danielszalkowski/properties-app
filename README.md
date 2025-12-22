@@ -64,7 +64,7 @@ properties-app/
 
 ```bash
 git clone https://github.com/danielszalkowski/properties-app.git
-cd notes-app
+cd properties-app
 ```
 
 ### 2️⃣ Crear el archivo de entorno del backend
