@@ -1,6 +1,6 @@
-# 📝 Notes App — Laravel + React + Docker
+# 🏠 Properties App — Laravel + React + Docker
 
-Aplicación de notas (CRUD) desarrollada con **Laravel 11** y **React + Vite**.
+Aplicación para listar propiedades desarrollada con **Laravel 11** y **React + Vite**.
 Se utiliza **SQLite** como base de datos.
 
 ---
@@ -33,7 +33,7 @@ Se utiliza **SQLite** como base de datos.
 ## 📁 Estructura del proyecto
 
 ```text
-notes-app/
+properties-app/
 ├── backend/
 │   ├── app/
 │   └── database/
@@ -115,7 +115,7 @@ docker compose exec backend php artisan key:generate
 ### 8️⃣ Ejecutar migraciones
 
 ```bash
-docker compose exec backend php artisan migrate
+docker compose exec backend php artisan migrate:fresh --seed
 ```
 
 ## 🌐 URLs
