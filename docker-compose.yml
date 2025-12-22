@@ -1,5 +1,7 @@
 services:
   backend:
+    environment:
+      HOME: /var/www
     build:
       context: ./docker/php
     container_name: notes-backend
