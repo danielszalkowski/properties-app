@@ -9,7 +9,7 @@ import PropertyList from './components/PropertyList';
 function App() {
   return (
     <div className="w-full p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Notas</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">Propiedades</h1>
       <Routes>
         <Route path="/" element={<PropertyList />} />
         <Route path="/new" element={<NoteForm />} />
