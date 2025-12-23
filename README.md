@@ -87,32 +87,37 @@ touch backend/database/database.sqlite
 New-Item -Path "./backend/database/database.sqlite" -ItemType File
 ```
 
-### 4️⃣ Instalar dependencias del backend
+### 4️⃣ Construir el contenedor del backend
 > ⚠️ En Windows, asegúrate de que **Docker Desktop** esté ejecutándose antes de usar cualquier comando `docker compose`. Si utilizas Docker en WSL en vez de la versión de Windows, puedes ejecutar el resto de comandos en WSL directamente.
+```bash
+docker compose build --no-cache backend
+```
+
+### 5️⃣ Instalar dependencias del backend
 
 ```bash
 docker compose run --rm backend composer install
 ```
 
-### 5️⃣ Instalar dependencias del frontend
+### 6️⃣ Instalar dependencias del frontend
 
 ```bash
 docker compose run --rm frontend npm install
 ```
 
-### 6️⃣ Levantar los contenedores
+### 7️⃣ Levantar los contenedores
 
 ```bash
 docker compose up -d
 ```
 
-### 7️⃣ Generar la clave de la aplicación
+### 8️⃣ Generar la clave de la aplicación
 
 ```bash
 docker compose exec backend php artisan key:generate
 ```
 
-### 8️⃣ Ejecutar migraciones
+### 9️⃣ Ejecutar migraciones
 
 ```bash
 docker compose exec backend php artisan migrate:fresh --seed
@@ -121,12 +126,8 @@ docker compose exec backend php artisan migrate:fresh --seed
 ## 🌐 URLs
 
 ### Frontend:
-http://localhost:5173
+http://localhost:5173/login
 
-### API Backend:
-http://localhost:5173/api/notes
-
-http://localhost:5173/api/health
 
 ## 🧪 Tests
 ### Frontend:

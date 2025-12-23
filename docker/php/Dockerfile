@@ -10,7 +10,6 @@ RUN apk add --no-cache \
 
 RUN docker-php-ext-install pdo pdo_sqlite zip
 
-# 👇 CLAVE
 ENV HOME=/var/www
 
 RUN mkdir -p /var/www/.composer \
